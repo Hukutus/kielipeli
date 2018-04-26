@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {User} from './User';
+import Assignment from "./Assignment";
 
 class Landing extends Component {
   constructor(props) {
@@ -7,13 +8,21 @@ class Landing extends Component {
 
     this.state = {
       username: '',
-      password: ''
-    }
+      password: '',
+      testAssignment: {
+        sentence: "Tämä on ensimmäinen lause.",
+        words: ["This", "is", "the first", "sentence"],
+        extra: ["That", "Them", "are", "dogs", "last", "were", "words", "dog"]
+      },
+      selectedWords: "",
+      tempIndex: 0
+    };
+
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
   }
 
   handleUsernameChange(e) {
-    console.log(e.target.value)
+    console.log(e.target.value);
     this.setState({username: e.target.value});
   }
 
@@ -24,6 +33,7 @@ class Landing extends Component {
         <form>
           <input type="text" value={this.state.username} onChange={this.handleUsernameChange}/>
           <User username={this.state.username} password={this.state.password} />
+          <Assignment testAssignment={this.state.testAssignment} selectedWords={this.state.selectedWords} tempIndex={this.state.tempIndex} />
         </form>
       </div>
     )
