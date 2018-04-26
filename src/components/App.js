@@ -1,28 +1,20 @@
-import React, { Component } from 'react';
-import logo from './../logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./App.css";
+
+import Landing from './Landing';
 
 class App extends Component {
   render() {
-      return (
-          <div className="App">
-              <div className="App-border">
-                  <div className="App-header">
-                      <h1 style={{'margin-top': '1rem'}}>Kielipeli</h1>
-                      <img src={logo} className="App-logo" alt="logo" />
-                  </div>
-                  <div className="App-content">
-                      <h1 className="App-title">Tässä joku lause, jossa sanoja joita opetella.</h1>
-                  </div>
-                  <div>
-                      <div className="Word-item">Testi</div>
-                      <div className="Word-item">Testi</div>
-                      <div className="Word-item">Testi</div>
-                      <div className="Word-item">Testi</div>
-                  </div>
-              </div>
-          </div>
-      );
+    return (
+      <div className="main-wrapper">
+        <BrowserRouter>
+          <Switch>
+              <Route exact path='/' component={Landing} />
+          </Switch>
+        </BrowserRouter>
+    </div>
+    )
   }
 }
 
