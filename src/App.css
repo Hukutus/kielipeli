@@ -1,0 +1,67 @@
+.App {
+  display: flex;
+  justify-content: center;
+
+  background-color: #222;
+  width: 100vw;
+  height: 100vh;
+}
+
+.App-border {
+  background-color: azure;
+  margin-top: 5vh;
+  width: 90vh;
+  height: 90vh;
+  border-radius: 2%;
+  overflow: hidden;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-right: -1rem;
+}
+
+.App-header {
+  margin: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-content {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-title {
+  font-size: 0.9rem;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.Word-item {
+  margin-left: -100%;
+  animation: Word-scroll infinite 5s linear;
+  margin: 1rem;
+  color: black;
+  background-color: aqua;
+  border-radius: 2%;
+  border: 0.1rem solid cadetblue;
+  width: max-content;
+}
+
+@keyframes Word-scroll {
+  from { transform: translateX(0vw); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
