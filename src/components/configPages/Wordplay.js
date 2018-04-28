@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import firestore from "../../javascripts/firebase";
 
 const docRef = "assignments/wordplay/wordpairs";
@@ -18,32 +19,26 @@ class WordplayConfig extends Component {
   }
 
   componentDidMount() {
-    firestore
-      .collection(docRef)
-      .onSnapshot(snapshot => {
-        const _wordpairs = snapshot.docs.map(doc => {
-          return { ...doc.data(), id: doc.id };
-        });
-        this.setState({ wordpairs: _wordpairs });
+    firestore.collection(docRef).onSnapshot(snapshot => {
+      const _wordpairs = snapshot.docs.map(doc => {
+        return { ...doc.data(), id: doc.id };
       });
+      this.setState({ wordpairs: _wordpairs });
+    });
   }
 
   async addPair() {
     try {
-    await firestore
-      .collection(docRef)
-      .add(this.state.newPair);
-      this.setState({newPair: {fi: '', en: ''}})
-    } catch(err) {
-
-    }
+      await firestore.collection(docRef).add(this.state.newPair);
+      this.setState({ newPair: { fi: "", en: "" } });
+    } catch (err) {}
   }
 
   deletePair(id) {
     firestore
       .collection(docRef)
       .doc(id)
-      .delete()
+      .delete();
   }
 
   handleChange(e) {
@@ -53,15 +48,21 @@ class WordplayConfig extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Configure Word Play assignment</h1>
-        <WordTable
-          wordpairs={this.state.wordpairs}
-          deletePair={this.deletePair}
-          addPair={this.addPair}
-          handleChange={this.handleChange}
-          newPair={this.state.newPair}
-        />
+        <div className="row">
+          <div className="col-sm-6">
+            <WordTable
+              wordpairs={this.state.wordpairs}
+              deletePair={this.deletePair}
+              addPair={this.addPair}
+              handleChange={this.handleChange}
+              newPair={this.state.newPair}
+            />
+          </div>
+        </div>
+
+        <Link to="configuration">Back to main configuration page</Link>
       </div>
     );
   }
@@ -77,7 +78,7 @@ const WordTable = ({
   newPair
 }) => {
   return (
-    <table>
+    <table className="table table-stribed">
       <thead>
         <tr>
           <th>FI</th>
@@ -92,7 +93,7 @@ const WordTable = ({
               <td>{pair.fi}</td>
               <td>{pair.en}</td>
               <td>
-                <button onClick={() => deletePair(pair.id)}>Delete</button>
+                <button className="btn btn-danger" onClick={() => deletePair(pair.id)}>Delete</button>
               </td>
             </tr>
           );
@@ -117,7 +118,7 @@ const WordTable = ({
             />
           </td>
           <td>
-            <button onClick={addPair}>Add</button>
+            <button className="btn btn-primary" onClick={addPair}>Add</button>
           </td>
         </tr>
       </tbody>

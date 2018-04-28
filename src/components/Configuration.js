@@ -19,7 +19,7 @@ class Configuration extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Select assignment you want to configure</h1>
         <ul>
           {this.state.assignments.map(a => {

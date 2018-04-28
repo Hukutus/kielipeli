@@ -12,7 +12,7 @@ import StorypictureConfig from './configPages/Storypicture';
 class App extends Component {
   render() {
     return (
-      <div className="main-wrapper">
+      <div className="">
         <BrowserRouter>
           <Switch>
               <Route exact path='/' component={Landing} />
