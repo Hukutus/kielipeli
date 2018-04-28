@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import firestore from "../javascripts/firebase";
 
-import { assignments } from "../javascripts/constants";
-
 class Configuration extends Component {
   constructor() {
     super();
