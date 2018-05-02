@@ -1,4 +1,4 @@
-.App {
+.Landing-body {
   display: flex;
   justify-content: center;
 
@@ -7,42 +7,57 @@
   height: 100vh;
 }
 
-.App-border {
-  background-color: azure;
+.Landing-border {
+  background-color: #f2f2f2;
   margin-top: 5vh;
+  padding: 5vh;
   width: 90vh;
   height: 90vh;
   border-radius: 2%;
   overflow: hidden;
-}
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 3.5rem;
-  width: 3.5rem;
-  margin-right: -1rem;
-}
-
-.App-header {
-  margin: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.App-content {
-  padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+.Landing-header {
+  display: flex;
   justify-content: center;
 }
 
-.App-title {
-  font-size: 0.9rem;
+.Landing-assignment-selection {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.App-intro {
-  font-size: large;
+.Landing-assignment-button {
+  height: 5rem;
+  width: 5rem;
+  margin: 0.4rem;
+
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 5%;
+  overflow: hidden;
+
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #222;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.Landing-assignment-button:hover,
+.Landing-assignment-button:active,
+.Landing-assignment-button:focus {
+  outline: none;
+  background: #666;
 }
 
 .Word-item {

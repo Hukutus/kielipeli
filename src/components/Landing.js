@@ -8,15 +8,10 @@ class Landing extends Component {
 
     this.state = {
       username: '',
-      password: '',
-      testAssignment: {
-        sentence: "Tämä on ensimmäinen lause.",
-        words: ["This", "is", "the first", "sentence"],
-        extra: ["That", "Them", "are", "dogs", "last", "were", "words", "dog"]
-      },
-      selectedWords: "",
-      tempIndex: 0
+      password: ''
     };
+
+    this.testArray = [1, 2, 3, "Kakke", "Perunaaa"];
 
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
   }
@@ -28,13 +23,30 @@ class Landing extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Welcome!</h1>
-        <form>
-          <input type="text" value={this.state.username} onChange={this.handleUsernameChange}/>
-          <User username={this.state.username} password={this.state.password} />
-          <Assignment testAssignment={this.state.testAssignment} selectedWords={this.state.selectedWords} tempIndex={this.state.tempIndex} />
-        </form>
+      <div className="Landing-body">
+        <div className="Landing-border">
+          <div className="Landing-header">
+            <h1>Welcome to WordPlay</h1>
+          </div>
+
+          <div className="Landing-assignment-selection">
+              {
+                this.testArray.map(item => {
+                  return (
+                      <button className="Landing-assignment-button">{item}</button>
+                  );
+                })
+              }
+          </div>
+
+          {/*<form>*/}
+            {/*<input type="text" value={this.state.username} onChange={this.handleUsernameChange}/>*/}
+            {/*<User username={this.state.username} password={this.state.password} />*/}
+            {/*<Assignment/>*/}
+
+            {/*<button className="btn btn-success">Testi</button>*/}
+          {/*</form>*/}
+        </div>
       </div>
     )
   }

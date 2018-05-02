@@ -20,9 +20,6 @@ class Assignment extends Component {
     render () {
         return (
             <div>
-                <h1>{this.props.testAssignment.sentence}</h1>
-                <h1>{this.props.selectedWords}</h1>
-
                 <div>
                     <button onClick={this.addWord}>Add word</button>
                 </div>
