@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import FileUploader from "react-firebase-file-uploader";
+import firebase from "firebase";
 import firestore from "../../javascripts/firebase";
 
 const colRef = "assignments/storypicture/pairs";
@@ -8,10 +10,15 @@ class StorypictureConfig extends Component {
     super();
 
     this.state = {
-      pairs: []
+      pairs: [],
+      pair: {
+        story: "",
+        pictureUrl: ""
+      }
     };
     this.handleChange = this.handleChange.bind(this);
     this.addPair = this.addPair.bind(this);
+    this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
   }
   componentDidMount() {
     firestore.collection(colRef).onSnapshot(snapshot => {
@@ -22,10 +29,6 @@ class StorypictureConfig extends Component {
     });
   }
 
-  addPair() {
-
-  }
-
   deletePair(id) {
     firestore
       .collection(colRef)
@@ -34,9 +37,32 @@ class StorypictureConfig extends Component {
   }
 
   handleChange(e) {
-    let _newPair = { ...this.state.newPair };
-    _newPair[e.target.name] = e.target.value;
-    this.setState({ newPair: _newPair });
+    let _pair = { ...this.state.pair, story: e.target.value };
+    this.setState({ pair: _pair });
+  }
+
+  handleUploadSuccess = filename => {
+    console.log("handleuploadsuccess " + filename);
+    this.setState({ avatar: filename });
+    firebase
+      .storage()
+      .ref("images")
+      .child(filename)
+      .getDownloadURL()
+      .then(url => {
+        const _pair = { ...this.state.pair, pictureUrl: url };
+        this.setState({ pair: _pair });
+      });
+  };
+
+  async addPair() {
+    if(!this.state.pair.pictureUrl) {
+      alert('You need to upload an image first!')
+      return;
+    }
+    try {
+      await firestore.collection(colRef).add(this.state.pair);
+    } catch (err) {}
   }
 
   render() {
@@ -45,7 +71,13 @@ class StorypictureConfig extends Component {
         <h1>StorypictureConfig</h1>
         <div className="row">
           <div className="col-sm-6">
-            <PairTable pairs={this.state.pairs} />
+            <PairTable
+              pairs={this.state.pairs}
+              handleUploadSuccess={this.handleUploadSuccess}
+              addPair={this.addPair}
+              handleChange={this.handleChange}
+              deletePair={this.deletePair}
+            />
           </div>
         </div>
       </div>
@@ -55,7 +87,14 @@ class StorypictureConfig extends Component {
 
 export default StorypictureConfig;
 
-const PairTable = ({ pairs, addPair, deletePair, handleChange, newPair }) => {
+const PairTable = ({
+  pairs,
+  addPair,
+  deletePair,
+  handleChange,
+  newPair,
+  handleUploadSuccess
+}) => {
   return (
     <table className="table table-stribed">
       <thead>
@@ -86,23 +125,22 @@ const PairTable = ({ pairs, addPair, deletePair, handleChange, newPair }) => {
             </tr>
           );
         })}
-        {/*  <tr>
+        <tr>
           <td>
             <input
               type="text"
               name="fi"
-              placeholder="FI"
+              placeholder="Story"
               onChange={handleChange}
-              value={newPair.fi}
+              // value={newPair.fi}
             />
           </td>
           <td>
-            <input
-              type="text"
-              name="en"
-              placeholder="EN"
-              onChange={handleChange}
-              value={newPair.en}
+            <FileUploader
+              accept="image/*"
+              randomizeFilename
+              storageRef={firebase.storage().ref("images")}
+              onUploadSuccess={handleUploadSuccess}
             />
           </td>
           <td>
@@ -110,7 +148,7 @@ const PairTable = ({ pairs, addPair, deletePair, handleChange, newPair }) => {
               Add
             </button>
           </td>
-        </tr> */}
+        </tr>
       </tbody>
     </table>
   );
