@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {User} from './User';
 import Assignment from "./Assignment";
+import Link from "react-router-dom/es/Link";
 
 class Landing extends Component {
   constructor(props) {
@@ -21,6 +22,10 @@ class Landing extends Component {
     this.setState({username: e.target.value});
   }
 
+  openAssignment(index) {
+    console.log("Should open assignment", index);
+  }
+
   render () {
     return (
       <div className="Landing-body">
@@ -31,10 +36,12 @@ class Landing extends Component {
 
           <div className="Landing-assignment-selection">
               {
-                this.testArray.map(item => {
+                this.testArray.map((item, index) => {
                   return (
-                      <button className="Landing-assignment-button">{item}</button>
-                  );
+                      <Link to="/assignment">
+                          <button className="Landing-assignment-button" onClick={() => this.openAssignment(index)}>{item}</button>
+                      </Link>
+                      );
                 })
               }
           </div>

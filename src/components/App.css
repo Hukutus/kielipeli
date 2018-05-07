@@ -18,6 +18,7 @@
 
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .Landing-header {
@@ -41,6 +42,7 @@
   color: white;
   border-radius: 5%;
   overflow: hidden;
+  cursor: pointer;
 
   font-weight: bold;
   text-transform: uppercase;
@@ -56,6 +58,56 @@
 .Landing-assignment-button:hover,
 .Landing-assignment-button:active,
 .Landing-assignment-button:focus {
+  outline: none;
+  background: #666;
+}
+
+.TimerContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.ReturnContainer {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
+.StartButton {
+  height: 50vh;
+  width: 50vh;
+  font-size: 5rem;
+
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #222;
+
+  text-align: center;
+  margin: auto;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.Started {
+  font-size: 10rem;
+  cursor: default;
+}
+
+.StartButton:hover,
+.StartButton:active,
+.StartButton:focus {
   outline: none;
   background: #666;
 }
