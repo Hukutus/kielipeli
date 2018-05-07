@@ -105,11 +105,20 @@
   cursor: default;
 }
 
+.Started:hover,
+.Started:active,
+.Started:focus {
+  outline: none;
+}
+
 .StartButton:hover,
 .StartButton:active,
 .StartButton:focus {
   outline: none;
-  background: #666;
+}
+
+.StartButton:hover:not(.Started) {
+  background: #444;
 }
 
 .Word-item {
