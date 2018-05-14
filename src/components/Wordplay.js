@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import firestore from "../javascripts/firebase";
+import Timer from "./Timer";
 
 const docRef = "assignments/wordplay/wordpairs";
 
 class Wordplay extends Component {
   constructor() {
     super();
+
     this.state = {
-      wordpairs: []
+        showTimer: true,
+        currentWord: {fi: "Testi", en: "Test"}
     };
+
+    this.onTimerEnd = this.onTimerEnd.bind(this);
   }
 
   componentDidMount() {
@@ -16,8 +21,13 @@ class Wordplay extends Component {
       const _wordpairs = snapshot.docs.map(doc => {
         return { ...doc.data(), id: doc.id };
       });
+
       this.setState({ wordpairs: _wordpairs });
     });
+  }
+
+  onTimerEnd() {
+    this.setState({ "showTimer": false });
   }
 
   render() {
@@ -28,9 +38,23 @@ class Wordplay extends Component {
                     <h1>Wordplay</h1>
                 </div>
 
-                <div>
-                  Content
-                </div>
+
+                { !this.state.showTimer ?
+                    <div className="TimerContainer">
+                        <Timer onTimerEnd={this.onTimerEnd} timerSeconds={3}></Timer>
+                    </div> :
+                    <div>
+                      <div>
+                          <div className={"instructions"}>Select the correct pair for the given word!</div>
+                          <div className={"titleWord"}>{this.state.currentWord.en}</div>
+                      </div>
+
+                      <div className={"wordArea"}>
+                        Words appear here
+                      </div>
+
+                    </div>
+                }
             </div>
         </div>
     );

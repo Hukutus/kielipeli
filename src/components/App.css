@@ -121,6 +121,30 @@
   background: #444;
 }
 
+.instructions {
+  display: flex;
+  justify-content: center;
+}
+
+.titleWord {
+  display: flex;
+  justify-content: center;
+
+  background: #ddd;
+  padding: 2vh;
+  font-size: large;
+  font-weight: bold;
+}
+
+.wordArea {
+  margin-top: 5vh;
+  width: 80vh;
+  height: 55vh;
+
+  background: #dfdfdf;
+  border-radius: 1%;
+}
+
 @keyframes Word-scroll {
   from { transform: translateX(0vw); }
   to { transform: translateX(100vw); }
