@@ -4,6 +4,8 @@ import "./App.css";
 
 import Landing from './Landing';
 import Assignment from './Assignment';
+import Wordplay from './Wordplay';
+import Storypicture from './Storypicture';
 
 import Configuration from './Configuration';
 import WordplayConfig from './configPages/Wordplay';
@@ -16,6 +18,8 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
               <Route exact path='/' component={Landing} />
+              <Route exact path='/wordplay' component={Wordplay} />
+              <Route exact path='/storypicture' component={Storypicture} />
               <Route exact path='/assignment' component={Assignment} />
               <Route exact path='/configuration' component={Configuration} />
               <Route exact path='/configWordplay' component={WordplayConfig} />

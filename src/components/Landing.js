@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {User} from './User';
-import Assignment from "./Assignment";
+// import {User} from './User';
+// import Assignment from "./Assignment";
 import Link from "react-router-dom/es/Link";
 import firestore from "../javascripts/firebase";
 

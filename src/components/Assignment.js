@@ -12,7 +12,7 @@ class Assignment extends Component {
     addWord(event) {
         const nextWord = this.props.testAssignment.words[this.props.tempIndex];
         const oldWords = this.props.selectedWords;
-        const index = this.props.tempIndex;
+        // const index = this.props.tempIndex;
 
         event.preventDefault();
         this.setState({selectedWords: oldWords + " " + nextWord});
