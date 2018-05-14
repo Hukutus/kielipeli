@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 import Landing from './Landing';
-import Assignment from './Assignment';
 import Wordplay from './Wordplay';
 import Storypicture from './Storypicture';
 
@@ -20,7 +19,6 @@ class App extends Component {
               <Route exact path='/' component={Landing} />
               <Route exact path='/wordplay' component={Wordplay} />
               <Route exact path='/storypicture' component={Storypicture} />
-              <Route exact path='/assignment' component={Assignment} />
               <Route exact path='/configuration' component={Configuration} />
               <Route exact path='/configWordplay' component={WordplayConfig} />
               <Route exact path='/configStorypicture' component={StorypictureConfig} />
