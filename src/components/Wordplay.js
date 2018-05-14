@@ -22,9 +22,17 @@ class Wordplay extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Wordplay</h1>
-      </div>
+        <div className="Landing-body">
+            <div className="Landing-border">
+                <div className="Landing-header">
+                    <h1>Wordplay</h1>
+                </div>
+
+                <div>
+                  Content
+                </div>
+            </div>
+        </div>
     );
   }
 }

@@ -62,11 +62,18 @@ class Storypicture extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Storypicture</h1>
-        <h3>Connect matching story and picture</h3>
-        <Pictures pairs={this.state.pairs} selectPicture={this.selectPicture} />
-        <Stories pairs={this.state.pairs} selectStory={this.selectStory} />
+      <div className="Landing-body">
+          <div className="Landing-border">
+              <div className="Landing-header">
+                  <h1>Storypicture</h1>
+              </div>
+              <div className="Landing-header">
+                  <span>Connect matching story and picture</span>
+              </div>
+
+              <Pictures pairs={this.state.pairs} selectPicture={this.selectPicture} />
+              <Stories pairs={this.state.pairs} selectStory={this.selectStory} />
+          </div>
       </div>
     );
   }
