@@ -137,12 +137,32 @@
 }
 
 .wordArea {
+  display: flex;
+  flex-wrap: wrap;
+
   margin-top: 5vh;
   width: 80vh;
-  height: 55vh;
 
   background: #dfdfdf;
   border-radius: 1%;
+}
+
+.matchWord {
+  height: max-content;
+  width: max-content;
+  margin: 1vh;
+
+  color: white;
+  background: #444444;
+  padding: 1vh 2vh;
+  font-size: medium;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.matchWord:hover {
+  background: #666666;
 }
 
 @keyframes Word-scroll {

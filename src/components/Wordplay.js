@@ -10,10 +10,13 @@ class Wordplay extends Component {
 
     this.state = {
         showTimer: true,
-        currentWord: {fi: "Testi", en: "Test"}
+        currentIndex: 0,
+        currentWord: {fi: "Testi", en: "Test", id: null},
+        wordpairs: []
     };
 
     this.onTimerEnd = this.onTimerEnd.bind(this);
+    this.shuffleArray = this.shuffleArray.bind(this);
   }
 
   componentDidMount() {
@@ -22,12 +25,45 @@ class Wordplay extends Component {
         return { ...doc.data(), id: doc.id };
       });
 
-      this.setState({ wordpairs: _wordpairs });
+      const shuffledWords = this.shuffleArray(_wordpairs);
+
+      this.setState({ wordpairs: shuffledWords, currentWord: this.shuffleArray(shuffledWords)[0] });
     });
   }
 
   onTimerEnd() {
     this.setState({ "showTimer": false });
+  }
+
+  checkWordMatch(wordId) {
+    if (wordId === this.state.currentWord.id) {
+      this.setState({
+          wordpairs: this.shuffleArray(this.state.wordpairs),
+          currentWord: this.state.wordpairs[0]
+      });
+    }
+    else {
+      console.log("Wrong!");
+    }
+  }
+
+  shuffleArray(array) {
+      let currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+      }
+
+      return array;
   }
 
   render() {
@@ -50,7 +86,11 @@ class Wordplay extends Component {
                       </div>
 
                       <div className={"wordArea"}>
-                        Words appear here
+                          {this.state.wordpairs.map(pair => {
+                              return <div className={"matchWord"} key={pair.id}
+                                          onClick={() => this.checkWordMatch(pair.id)}
+                              >{pair.fi}</div>;
+                          })}
                       </div>
 
                     </div>
