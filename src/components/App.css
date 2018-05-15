@@ -1,3 +1,7 @@
+.App {
+  position: relative;
+}
+
 .Landing-body {
   display: flex;
   justify-content: center;
@@ -278,6 +282,27 @@
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.successPopUp {
+  position: absolute;
+
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 19.5%;
+
+  font-weight: bolder;
+  font-size: 10vh;
+  text-transform: uppercase;
+  color: green;
+  opacity: 0;
+
+  animation: PopUpFade 3s normal;
+}
+
+@keyframes PopUpFade {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes Word-scroll {
