@@ -45,9 +45,9 @@ class Wordplay extends Component {
   }
 
   resetState() {
-    this.setState(initialState);
-
     this.setState(prevState => ({
+      ...initialState,
+      wordpairs: prevState.wordpairs,
       shuffledPairs: this.shuffleArray(prevState.wordpairs),
       currentWord: prevState.wordpairs[0]
     }));
