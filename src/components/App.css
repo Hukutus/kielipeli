@@ -152,10 +152,13 @@
 
 .wordArea {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
 
   margin-top: 5vh;
   width: 80vh;
+
+  oveflow: hidden;
 
   background: #dfdfdf;
   border-radius: 1%;
@@ -177,6 +180,22 @@
 
 .matchWord:hover {
   background: #666666;
+}
+
+.wordMismatch {
+  background: darkred;
+}
+
+.wordMismatch:hover {
+  background: red;
+}
+
+.wordMatch {
+  background: green;
+}
+
+.wordMatch:hover {
+  background: lightgreen;
 }
 
 @keyframes Word-scroll {
