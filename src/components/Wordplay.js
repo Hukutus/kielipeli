@@ -38,9 +38,14 @@ class Wordplay extends Component {
   }
 
   confirmMatch() {
+    let newWord = this.shuffleArray(this.state.wordpairs)[0];
+    while (this.state.currentWord.id === newWord.id) {
+      newWord = this.shuffleArray(this.state.wordpairs)[0];
+    }
+
     this.setState({
       wordpairs: this.shuffleArray(this.state.wordpairs),
-      currentWord: this.shuffleArray(this.state.wordpairs)[0]
+      currentWord: newWord
     });
   }
 
