@@ -22,8 +22,8 @@
 }
 
 .Landing-header {
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  text-align: center
 }
 
 .Landing-assignment-selection {
@@ -60,6 +60,20 @@
 .Landing-assignment-button:focus {
   outline: none;
   background: #666;
+}
+
+.StorypictureContainer {
+  display: flex;
+}
+
+.Storypicture-pictures {
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.Storypicture-picture {
+  max-width: 200px;
 }
 
 .TimerContainer {

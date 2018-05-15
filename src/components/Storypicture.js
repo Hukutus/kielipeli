@@ -26,15 +26,23 @@ class Storypicture extends Component {
   }
 
   selectStory(id) {
-    this.setState({ selectedStoryId: id }, () => {
-      this.checkIfRight();
-    });
+    if (id === this.state.selectedStoryId) {
+      this.setState({ selectedStoryId: "" });
+    } else {
+      this.setState({ selectedStoryId: id }, () => {
+        this.checkIfRight();
+      });
+    }
   }
 
   selectPicture(id) {
-    this.setState({ selectedPictureId: id }, () => {
-      this.checkIfRight();
-    });
+    if (id === this.state.selectedPictureId) {
+      this.setState({ selectedPictureId: "" });
+    } else {
+      this.setState({ selectedPictureId: id }, () => {
+        this.checkIfRight();
+      });
+    }
   }
 
   checkIfRight() {
@@ -56,38 +64,35 @@ class Storypicture extends Component {
 
   handleWrong() {
     alert("Wrong!");
-    this.setState({selectedPictureId: ''});
-    this.setState({selectedStoryId: ''});
+    this.setState({ selectedPictureId: "" });
+    this.setState({ selectedStoryId: "" });
   }
 
   render() {
-    return (
-      <div className="Landing-body">
-          <div className="Landing-border">
-              <div className="Landing-header">
-                  <h1>Storypicture</h1>
-              </div>
-              <div className="Landing-header">
-                  <span>Connect matching story and picture</span>
-              </div>
-
-              <Pictures pairs={this.state.pairs} selectPicture={this.selectPicture} />
-              <Stories pairs={this.state.pairs} selectStory={this.selectStory} />
+    return <div className="Landing-body">
+        <div className="Landing-border">
+          <div className="Landing-header">
+            <h1>Storypicture</h1>
+            <h3>Connect matching story and picture</h3>
           </div>
-      </div>
-    );
+          <div className="StorypictureContainer">
+            <Pictures {...this.state} selectPicture={this.selectPicture} />
+            <Stories {...this.state} selectStory={this.selectStory} />
+          </div>
+        </div>
+      </div>;
   }
 }
 
 export default Storypicture;
 
-const Pictures = ({ pairs, selectPicture }) => {
+const Pictures = ({ pairs, selectPicture, selectedPictureId }) => {
   return (
-    <div>
+    <div className="Storypicture-pictures">
       {pairs.map(pair => {
         return (
           <div key={pair.id} onClick={() => selectPicture(pair.id)}>
-            <img src={pair.pictureUrl} width="300" />
+            <img src={pair.pictureUrl} className="Storypicture-picture" />
           </div>
         );
       })}
@@ -95,16 +100,41 @@ const Pictures = ({ pairs, selectPicture }) => {
   );
 };
 
-const Stories = ({ pairs, selectStory }) => {
+const Stories = ({ pairs, selectStory, selectedStoryId }) => {
+  const suffled = shuffleArray(pairs);
   return (
-    <div>
-      {pairs.map(pair => {
+    <div className="Storypicture-stories">
+      {suffled.map(pair => {
         return (
           <div key={pair.id} onClick={() => selectStory(pair.id)}>
-            {pair.story}
+            {pair.id !== selectedStoryId ? (
+              <p>{pair.story}</p>
+            ) : (
+              <b>{pair.story}</b>
+            )}
           </div>
         );
       })}
     </div>
   );
+};
+
+const shuffleArray = array => {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 };
