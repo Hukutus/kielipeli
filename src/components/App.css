@@ -5,6 +5,12 @@
   background-color: #222;
   width: 100vw;
   height: 100vh;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .Landing-border {
@@ -196,6 +202,82 @@
 
 .wordMatch:hover {
   background: lightgreen;
+}
+
+.LivesContainer {
+  display:flex;
+  flex-direction: row-reverse;
+
+  position: absolute;
+  bottom: 2vh;
+  right: 2vh;
+}
+
+.heart {
+  margin: 1vh;
+  background-color: #666;
+  height: 2vh;
+  transform: rotate(-45deg);
+  width: 2vh;
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  background-color: #666;
+  border-radius: 50%;
+  height: 2vh;
+  position: absolute;
+  width: 2vh;
+}
+
+.heart:after {
+  top: 0;
+  left: 1vh;
+}
+
+.heart:before {
+  top: -1vh;
+  left: 0;
+}
+
+.filled {
+  background-color: red;
+}
+
+.filled:before,
+.filled:after {
+  background-color: red;
+}
+
+.gameOverContainer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 2vh;
+
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.gameOverButton {
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 5%;
+  overflow: hidden;
+  cursor: pointer;
+  margin-left: 2vh;
+
+  font-weight: bold;
+  text-transform: uppercase;
+  background: darkgreen;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 @keyframes Word-scroll {

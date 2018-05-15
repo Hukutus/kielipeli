@@ -4,21 +4,28 @@ import Timer from "./Timer";
 
 const docRef = "assignments/wordplay/wordpairs";
 
+const initialState = {
+  showTimer: true,
+  currentIndex: 0,
+  currentWord: {},
+  wordpairs: [],
+  selectionClass: "",
+  maxLives: 5,
+  remainingLives: 5,
+  showGameOver: false
+}
+
 class Wordplay extends Component {
   constructor() {
     super();
 
-    this.state = {
-      showTimer: true,
-      currentIndex: 0,
-      currentWord: {fi: "Testi", en: "Test", id: null},
-      wordpairs: [],
-      selectionClass: ""
-    };
+    this.state = initialState;
 
     this.onTimerEnd = this.onTimerEnd.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
     this.confirmMatch = this.confirmMatch.bind(this);
+    this.onMismatch = this.onMismatch.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   componentDidMount() {
@@ -27,9 +34,19 @@ class Wordplay extends Component {
         return {...doc.data(), id: doc.id};
       });
 
-      const shuffledWords = this.shuffleArray(_wordpairs);
+      this.setState({wordpairs: this.shuffleArray(_wordpairs), currentWord: this.shuffleArray(_wordpairs)[0]});
+    });
+  }
 
-      this.setState({wordpairs: shuffledWords, currentWord: this.shuffleArray(shuffledWords)[0]});
+  resetState() {
+    this.setState(initialState);
+
+    firestore.collection(docRef).onSnapshot(snapshot => {
+      const _wordpairs = snapshot.docs.map(doc => {
+        return {...doc.data(), id: doc.id};
+      });
+
+      this.setState({wordpairs: this.shuffleArray(_wordpairs), currentWord: this.shuffleArray(_wordpairs)[0]});
     });
   }
 
@@ -38,6 +55,10 @@ class Wordplay extends Component {
   }
 
   confirmMatch() {
+    if (this.state.showGameOver) {
+      return;
+    }
+
     let newWord = this.shuffleArray(this.state.wordpairs)[0];
     while (this.state.currentWord.id === newWord.id) {
       newWord = this.shuffleArray(this.state.wordpairs)[0];
@@ -46,6 +67,23 @@ class Wordplay extends Component {
     this.setState({
       wordpairs: this.shuffleArray(this.state.wordpairs),
       currentWord: newWord
+    });
+  }
+
+  onMismatch() {
+    if (this.state.showGameOver) {
+      return;
+    }
+
+    this.setState(prevState => {
+      if (prevState.remainingLives === 1) {
+        return {
+          remainingLives: --prevState.remainingLives,
+          showGameOver: true
+        };
+      }
+
+      return {remainingLives: --prevState.remainingLives};
     });
   }
 
@@ -91,12 +129,26 @@ class Wordplay extends Component {
               <div className={"wordArea"}>
                 {this.state.wordpairs.map(wordPair => {
                   return (
-                    <Words currentWord={this.state.currentWord} pair={wordPair} key={wordPair.id} confirmMatch={this.confirmMatch}/>
+                    <Words currentWord={this.state.currentWord} pair={wordPair}
+                           gameOverStatus={this.state.showGameOver}
+                           key={wordPair.id} confirmMatch={this.confirmMatch}
+                           onMismatch={this.onMismatch}
+                    />
                   );
                 })}
               </div>
 
+              <LifePoints maxLives={this.state.maxLives} remainingLives={this.state.remainingLives} />
             </div>
+          }
+
+          {this.state.showGameOver ?
+            <div className={"gameOverContainer"}>
+              Game over
+
+              <button className={"gameOverButton"} onClick={() => this.resetState()}>Try again</button>
+            </div> :
+            ""
           }
         </div>
       </div>
@@ -124,6 +176,10 @@ class Words extends Component {
   }
 
   checkWordMatch(wordId) {
+    if (this.props.gameOverStatus) {
+      return;
+    }
+
     if (wordId === this.props.currentWord.id) {
       this.setState({
         statusClass: "wordMatch"
@@ -135,6 +191,8 @@ class Words extends Component {
       this.setState({
         statusClass: "wordMismatch"
       });
+
+      this.props.onMismatch();
     }
   }
 
@@ -146,3 +204,16 @@ class Words extends Component {
     );
   }
 };
+
+const LifePoints = (({maxLives, remainingLives}) => {
+  return (
+    <div className={"LivesContainer"}>
+      {new Array(maxLives).fill(null).map((unneeded, index) => {
+        return (
+          <div className={remainingLives > index ? "heart filled" : "heart"} key={index + "_life"}></div>
+        );
+      })}
+    </div>
+  );
+});
+
