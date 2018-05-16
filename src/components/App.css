@@ -176,23 +176,27 @@
 
   margin-top: 5vh;
   width: 80vh;
+  height: 45vh;
 
-  oveflow: hidden;
+  overflow: hidden;
+  position: relative;
 
   background: #dfdfdf;
   border-radius: 1%;
 }
 
 .matchWord {
+  position: absolute;
+
   height: max-content;
   width: max-content;
-  margin: 1vh;
 
   color: white;
   background: #444444;
   padding: 1vh 2vh;
   font-size: medium;
   font-weight: bold;
+  border-radius: 5%;
 
   cursor: pointer;
 }
@@ -222,8 +226,8 @@
   flex-direction: row-reverse;
 
   position: absolute;
-  bottom: 2vh;
-  right: 2vh;
+  bottom: 5vh;
+  right: 5vh;
 }
 
 .heart {
@@ -267,7 +271,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  padding: 2vh;
+  padding: 5vh;
 }
 
 .gameOverButton {
@@ -322,17 +326,68 @@
   animation: PopUpFade 2s normal;
 }
 
+.wordItemTop1 {
+  top: 3vh;
+}
+
+.wordItemTop2 {
+  top: 11vh;
+}
+
+.wordItemTop3 {
+  top: 19vh;
+}
+
+.wordItemTop4 {
+  top: 27vh;
+}
+
+.wordItemTop5 {
+  top: 35vh;
+}
+
+
+
+.wordItemLeft1 {
+  left : 0;
+  animation: LeftRight 18s forwards linear;
+}
+
+.wordItemLeft2 {
+  left : -10vh;
+  animation: RightLeft 20s forwards linear;
+}
+
+.wordItemLeft3 {
+  left : -15vh;
+  animation: LeftRight 17s forwards linear;
+}
+
+.wordItemLeft4 {
+  left : -22vh;
+  animation: RightLeft 22s forwards linear;
+}
+
+.wordItemLeft5 {
+  left : -30vh;
+  animation: LeftRight 21s forwards linear;
+}
+
+.wordHidden {
+  top: 100vh;
+}
+
+@keyframes RightLeft {
+  from { transform: translateX(150vh) }
+  to { transform: translateX(-50vh) }
+}
+
+@keyframes LeftRight {
+  from { transform: translateX(-50vh) }
+  to { transform: translateX(150vh) }
+}
+
 @keyframes PopUpFade {
   from { opacity: 1; }
   to { opacity: 0; }
-}
-
-@keyframes Word-scroll {
-  from { transform: translateX(0vw); }
-  to { transform: translateX(100vw); }
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

@@ -172,10 +172,26 @@ class Words extends Component {
     super(props);
 
     this.state = {
-      statusClass: ""
+      statusClass: "",
+      animationClass: "wordHidden"
     };
 
     this.checkWordMatch = this.checkWordMatch.bind(this);
+    this.randomizePositionClass = this.randomizePositionClass.bind(this);
+  }
+
+  // loopPositionRandomize() {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       animationClass: this.randomizePositionClass()
+  //     }, this.loopPositionRandomize());
+  //   }, this.state.previousInterval*1000 + 2000);
+  // }
+
+  componentDidMount() {
+    this.setState({
+      animationClass: this.randomizePositionClass(-1)
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -191,23 +207,41 @@ class Words extends Component {
 
     if (wordId === this.props.currentWord.id) {
       this.setState({
-        statusClass: "wordMatch"
-      });
-
-      this.props.confirmMatch();
+        statusClass: " wordMatch"
+      }, this.props.confirmMatch());
     }
     else {
       this.setState({
-        statusClass: "wordMismatch"
-      });
-
-      this.props.onMismatch();
+        statusClass: " wordMismatch"
+      }, this.props.onMismatch());
     }
+  }
+
+  randomizePositionClass(previousIndex) {
+    // Force classNumber to update to prevent frozen words
+    let randomLeft = Math.floor(Math.random() * 5);
+    while (randomLeft === previousIndex) {
+      randomLeft = Math.floor(Math.random() * 5);
+    }
+
+    const intervals = [20, 25, 21, 28, 27];
+
+    setTimeout(() => {
+      this.setState({
+        animationClass: this.randomizePositionClass(randomLeft)
+      });
+    }, intervals[randomLeft]*1000 + 1000);
+
+    return(
+        " wordItemTop" + (Math.floor(Math.random() * 5) + 1) +
+        " wordItemLeft" + (randomLeft + 1)
+    );
   }
 
   render() {
     return (
-      <div className={"matchWord " + this.state.statusClass} onClick={() => this.checkWordMatch(this.props.pair.id)}>
+      <div className={"matchWord" + this.state.statusClass + (this.state.animationClass || "wordHidden")}
+           onClick={() => this.checkWordMatch(this.props.pair.id)}>
         {this.props.pair.fi}
       </div>
     );
@@ -219,7 +253,7 @@ const LifePoints = (({maxLives, remainingLives}) => {
     <div className={"LivesContainer"}>
       {new Array(maxLives).fill(null).map((unneeded, index) => {
         return (
-          <div className={remainingLives > index ? "heart filled" : "heart"} key={index + "_life"}></div>
+          <div className={remainingLives > index ? "heart filled" : "heart"} key={index + "_life"} />
         );
       })}
     </div>
