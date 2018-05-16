@@ -15,7 +15,7 @@ const initialState = {
   remainingLives: 5,
   showGameOver: false,
   showCorrect: false
-}
+};
 
 class Wordplay extends Component {
   constructor() {
@@ -58,7 +58,7 @@ class Wordplay extends Component {
   }
 
   confirmMatch() {
-    if (this.state.showGameOver) {
+    if (this.state.showGameOver || this.state.showCorrect) {
       return;
     }
 
@@ -75,7 +75,7 @@ class Wordplay extends Component {
   }
 
   onMismatch() {
-    if (this.state.showGameOver) {
+    if (this.state.showGameOver || this.state.showCorrect) {
       return;
     }
 
@@ -87,7 +87,9 @@ class Wordplay extends Component {
         };
       }
 
-      return {remainingLives: --prevState.remainingLives};
+      return {
+        remainingLives: --prevState.remainingLives
+      };
     });
   }
 
@@ -135,7 +137,7 @@ class Wordplay extends Component {
                   {this.state.wordpairs.map(wordPair => {
                     return (
                       <Words currentWord={this.state.currentWord} pair={wordPair}
-                             gameOverStatus={this.state.showGameOver}
+                             showGameOver={this.state.showGameOver}
                              key={wordPair.id} confirmMatch={this.confirmMatch}
                              onMismatch={this.onMismatch}
                       />
@@ -149,8 +151,6 @@ class Wordplay extends Component {
 
             {this.state.showGameOver ?
               <div className={"gameOverContainer"}>
-                Game over
-
                 <button className={"gameOverButton"} onClick={() => this.resetState()}>Try again</button>
               </div> :
               ""
@@ -159,6 +159,7 @@ class Wordplay extends Component {
         </div>
 
         {this.state.showCorrect ? <div className={"successPopUp"}>Correct!</div> : "" }
+        {this.state.showGameOver ? <div className={"failurePopUp"}>Game over!</div> : "" }
       </div>
     );
   }
@@ -184,7 +185,7 @@ class Words extends Component {
   }
 
   checkWordMatch(wordId) {
-    if (this.props.gameOverStatus) {
+    if (this.props.showGameOver) {
       return;
     }
 
@@ -211,7 +212,7 @@ class Words extends Component {
       </div>
     );
   }
-};
+}
 
 const LifePoints = (({maxLives, remainingLives}) => {
   return (

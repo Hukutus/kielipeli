@@ -259,9 +259,6 @@
   left: 0;
   bottom: 0;
   padding: 2vh;
-
-  font-weight: bold;
-  text-transform: uppercase;
 }
 
 .gameOverButton {
@@ -271,8 +268,8 @@
   border-radius: 5%;
   overflow: hidden;
   cursor: pointer;
-  margin-left: 2vh;
 
+  font-size: 3vh;
   font-weight: bold;
   text-transform: uppercase;
   background: darkgreen;
@@ -298,6 +295,22 @@
   opacity: 0;
 
   animation: PopUpFade 3s normal;
+}
+
+.failurePopUp {
+  position: absolute;
+
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 19.5%;
+
+  font-weight: bolder;
+  font-size: 10vh;
+  text-transform: uppercase;
+  color: darkred;
+  opacity: 0;
+
+  animation: PopUpFade 2s normal;
 }
 
 @keyframes PopUpFade {
