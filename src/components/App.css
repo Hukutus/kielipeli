@@ -82,8 +82,17 @@
   flex-wrap: wrap;
 }
 
+.Storypicture-picture-wrapper {
+  padding: 1em;
+  width: 50%;
+}
+
+.selected {
+  border: solid 1px black;
+}
+
 .Storypicture-picture {
-  max-width: 200px;
+  max-width: 100%;
 }
 
 .TimerContainer {

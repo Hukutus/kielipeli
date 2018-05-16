@@ -9,7 +9,9 @@ class Storypicture extends Component {
     this.state = {
       pairs: [],
       selectedStoryId: "",
-      selectedPictureId: ""
+      selectedPictureId: "",
+      pictureList: [],
+      storyList: []
     };
     this.selectPicture = this.selectPicture.bind(this);
     this.selectStory = this.selectStory.bind(this);
@@ -22,7 +24,10 @@ class Storypicture extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.setState({ pairs: _pairs });
+      this.setState({pictureList: shuffleArray(_pairs)});
+      this.setState({storyList: shuffleArray(_pairs)})
     });
+
   }
 
   selectStory(id) {
@@ -60,6 +65,8 @@ class Storypicture extends Component {
 
   handleCorrect() {
     alert("Correct!");
+    this.setState({ selectedPictureId: "" });
+    this.setState({ selectedStoryId: "" });
   }
 
   handleWrong() {
@@ -86,12 +93,12 @@ class Storypicture extends Component {
 
 export default Storypicture;
 
-const Pictures = ({ pairs, selectPicture, selectedPictureId }) => {
+const Pictures = ({ pictureList, selectPicture, selectedPictureId }) => {
   return (
     <div className="Storypicture-pictures">
-      {pairs.map(pair => {
+      {pictureList.map(pair => {
         return (
-          <div key={pair.id} onClick={() => selectPicture(pair.id)}>
+          <div key={pair.id} onClick={() => selectPicture(pair.id)} className={"Storypicture-picture-wrapper " + (selectedPictureId === pair.id ? "selected" : "") }>
             <img src={pair.pictureUrl} className="Storypicture-picture" />
           </div>
         );
@@ -100,13 +107,12 @@ const Pictures = ({ pairs, selectPicture, selectedPictureId }) => {
   );
 };
 
-const Stories = ({ pairs, selectStory, selectedStoryId }) => {
-  const suffled = shuffleArray(pairs);
+const Stories = ({ storyList, selectStory, selectedStoryId }) => {
   return (
     <div className="Storypicture-stories">
-      {suffled.map(pair => {
+      {storyList.map(pair => {
         return (
-          <div key={pair.id} onClick={() => selectStory(pair.id)}>
+          <div key={pair.id} onClick={() => selectStory(pair.id)} >
             {pair.id !== selectedStoryId ? (
               <p>{pair.story}</p>
             ) : (
