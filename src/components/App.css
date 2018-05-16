@@ -76,6 +76,12 @@
   display: flex;
 }
 
+.storyContainer {
+  width: 80vh;
+  position: absolute;
+  bottom: 4vh;
+}
+
 .Storypicture-pictures {
   display: flex;
   width: 50%;
@@ -87,8 +93,22 @@
   width: 50%;
 }
 
+.story {
+  width: 100%;
+  background: #ddd;
+  border-radius: 1vh;
+  margin: 1vh 0;
+  padding: 0.5vh 0;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  overflow: hidden;
+}
+
 .selected {
-  border: solid 1px black;
+  background: #ddd;
 }
 
 .Storypicture-picture {

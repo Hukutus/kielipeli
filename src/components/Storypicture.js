@@ -64,30 +64,44 @@ class Storypicture extends Component {
   }
 
   handleCorrect() {
-    alert("Correct!");
+    this.setState({ showCorrect: true });
     this.setState({ selectedPictureId: "" });
     this.setState({ selectedStoryId: "" });
+
+    setTimeout(() => {
+      this.setState({ showCorrect: false});
+    }, 2000);
   }
 
   handleWrong() {
-    alert("Wrong!");
+    this.setState({ showWrong: true });
     this.setState({ selectedPictureId: "" });
     this.setState({ selectedStoryId: "" });
+
+    setTimeout(() => {
+      this.setState({ showWrong: false});
+    }, 2000);
   }
 
   render() {
-    return <div className="Landing-body">
+    return <div className={"App"}><div className="Landing-body">
         <div className="Landing-border">
           <div className="Landing-header">
             <h1>Storypicture</h1>
-            <h3>Connect matching story and picture</h3>
+            <div className={"instructions"}>Connect matching story and picture</div>
           </div>
           <div className="StorypictureContainer">
             <Pictures {...this.state} selectPicture={this.selectPicture} />
+          </div>
+          <div className={"storyContainer"}>
             <Stories {...this.state} selectStory={this.selectStory} />
           </div>
         </div>
-      </div>;
+      </div>
+
+      {this.state.showCorrect ? <div className={"successPopUp"}>Correct!</div> : "" }
+      {this.state.showWrong ? <div className={"failurePopUp"}>Wrong!</div> : "" }
+    </div>;
   }
 }
 
@@ -99,7 +113,7 @@ const Pictures = ({ pictureList, selectPicture, selectedPictureId }) => {
       {pictureList.map(pair => {
         return (
           <div key={pair.id} onClick={() => selectPicture(pair.id)} className={"Storypicture-picture-wrapper " + (selectedPictureId === pair.id ? "selected" : "") }>
-            <img src={pair.pictureUrl} className="Storypicture-picture" />
+            <img src={pair.pictureUrl} className="Storypicture-picture" alt={pair.pictureUrl} />
           </div>
         );
       })}
@@ -112,9 +126,9 @@ const Stories = ({ storyList, selectStory, selectedStoryId }) => {
     <div className="Storypicture-stories">
       {storyList.map(pair => {
         return (
-          <div key={pair.id} onClick={() => selectStory(pair.id)} >
+          <div className="story" key={pair.id} onClick={() => selectStory(pair.id)} >
             {pair.id !== selectedStoryId ? (
-              <p>{pair.story}</p>
+              <div>{pair.story}</div>
             ) : (
               <b>{pair.story}</b>
             )}
